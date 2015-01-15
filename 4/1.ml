@@ -26,4 +26,7 @@ fun drawHLine (im :image) x y length c =
 		while (!i < length) do
 			((drawPixel im (x + (!i)) y c); (i := (!i) + 1))
 	end;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7a29d4171589e7e91fa791d78cd431f10b506076
