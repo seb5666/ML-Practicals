@@ -1,0 +1,46 @@
+ML Practical 2
+Sebastian Borgeaud
+spb61
+
+Exercise 1:
+fun last [x] = x
+	| last (x::l) = last(l);
+
+Warning- in '1.ml', line 1.
+Matches are not exhaustive.   Found near
+fun last([ x]) = x | last(......) = last(l)
+val last = fn : 'a list -> 'a
+> last [1,2,3];
+val it = 3 : int
+> last [1];
+val it = 1 : int
+
+Exercise 2:
+fun butLast [] = []
+	| butLast [x] = []
+	| butLast (x::l) = x::butLast(l);
+
+> val l = [1,2,3,4];
+val l = [1, 2, 3, 4] : int list
+> butLast l;
+val it = [1, 2, 3] : int list
+> rev (tl ( rev l));
+val it = [1, 2, 3] : int list
+> butLast[1];
+val it = [] : int list
+
+The time complexity for butLast is O(n) because the function has to go through each element exactly once. For rev(tl(rev xs )) the time complexity is also O(n) because rev(l) is in O(n) and tl is O(1). Actually, it would be O(2n) but we don't care about the 2.
+
+For the space complexity butLast is in O(n), it copies each element exactly once. rev(tl(rev xs)) copies each element, except for the last one, twice. Therefore the space complexity is also O(n), more precisely O(n + (n-1));
+
+
+Exercise 3:
+fun nth (x::l, 0) = x
+	| nth(x::l, n) = nth(l, n-1);
+
+> val l = [1,2,3,4];
+val l = [1, 2, 3, 4] : int list
+> nth(l,0);
+val it = 1 : int
+> nth(l,3);
+val it = 4 : int

@@ -1,0 +1,133 @@
+Sebastian Borgeaud
+spb61
+
+Exercise 3
+
+1.
+> fun add a 0 = a | add a b = s (add a (b-1));  
+val add = fn : int -> int -> int
+> add 5 6;
+val it = 11 : int
+> add 99 1;
+val it = 100 : int
+
+> fun mult a 1 = a | mult a b = add a (mult a (b-1));
+val mult = fn : int -> int -> int
+> mult 4 4;
+val it = 16 : int
+> mult 6 6;
+val it = 36 : int
+> mult 3 9;
+val it = 27 : int
+
+> fun power a 0 = 1 | power a b = mult a (power a (b-1));
+val power = fn : int -> int -> int
+> power 2 3;
+val it = 8 : int
+> power 2 10;
+val it = 1024 : int
+> power 5 3;
+val it = 125 : int
+
+
+2.
+fun nfold f n x =
+	if n = 0
+		then x
+	else if n = 1
+		then (f x)
+	else
+	 	nfold f (n-1) (f x);
+
+fun sum a b= nfold (fn n => n+1) a b;
+
+fun mult a b = nfold (sum a) (b-1) a;
+
+fun power m n = nfold (mult m) (n-1) m;
+
+val nfold = fn : ('a -> 'a) -> int -> 'a -> 'a
+val sum = fn : int -> int -> int
+val mult = fn : int -> int -> int
+val power = fn : int -> int -> int
+
+
+> sum 0 0;
+val it = 0: int
+> sum 13 1;
+val it = 14: int
+> sum 18 9;
+val it = 27: int
+> sum 1 (~2);
+val it = ~1: int
+
+> mult 3 4;
+val it = 12: int
+> mult 191 2;
+val it = 382: int
+> mult 5 6;
+val it = 30: int
+
+> power 2 10;
+val it = 1024: int
+> power 9 1;
+val it = 9: int
+> power 12 2;
+val it = 144: int
+
+
+3/4
+fun nth(s,n) = 
+	let 
+		fun head (Cons(x,_)) = x
+		fun tail (Cons(_,xf)) = xf()
+	in
+		if n = 1 then head(s) else nth(tail(s), n-1)
+	end;
+
+
+val squares =
+	let 
+		fun squares_aux(k) = Cons(k*k, fn () => squares_aux(k+1))
+	in 
+		squares_aux(1)
+	end;
+
+datatype 'a stream = Cons of 'a * (unit -> 'a stream)
+val from = fn : int -> int stream
+val nth = fn : 'a stream * int -> 'a
+val squares = Cons (1, fn) : int stream
+val it = () : unit
+
+> nth(squares, 13);
+val it = 169 : int
+
+> nth(squares, 49); 
+val it = 2401 : int
+
+
+5.
+fun map2 f ys xs = 
+	Cons((f (head ys) (head xs)), fn () => map2 f (tail ys) (tail xs));
+
+
+val squares =
+	let 
+		fun squares_aux(k) = Cons(k*k, fn () => squares_aux(k+1))
+	in 
+		squares_aux(1)
+	end;
+
+datatype 'a stream = Cons of 'a * (unit -> 'a stream)
+val head = fn : 'a stream -> 'a
+val tail = fn : 'a stream -> 'a stream
+val map2 = fn : ('a -> 'b -> 'c) -> 'a stream -> 'b stream -> 'c stream
+val it = () : unit
+
+> map2 add (from 1) (from 3);
+val it = Cons (4, fn): int stream
+> tail it;
+val it = Cons (6, fn): int stream
+> tail it;
+val it = Cons (8, fn): int stream
+> tail it;
+val it = Cons (10, fn): int stream

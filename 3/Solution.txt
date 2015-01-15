@@ -1,0 +1,64 @@
+Sebastian Borgeaud
+spb61
+
+Exercise 3
+
+1.
+> fun add a 0 = a | add a b = s (add a (b-1));  
+val add = fn : int -> int -> int
+> add 5 6;
+val it = 11 : int
+> add 99 1;
+val it = 100 : int
+
+> fun mult a 1 = a | mult a b = add a (mult a (b-1));
+val mult = fn : int -> int -> int
+> mult 4 4;
+val it = 16 : int
+> mult 6 6;
+val it = 36 : int
+> mult 3 9;
+val it = 27 : int
+
+> fun power a 0 = 1 | power a b = mult a (power a (b-1));
+val power = fn : int -> int -> int
+> power 2 3;
+val it = 8 : int
+> power 2 10;
+val it = 1024 : int
+> power 5 3;
+val it = 125 : int
+
+
+2.
+
+
+3.
+fun nth(s,n) = 
+	let 
+		fun head (Cons(x,_)) = x
+		fun tail (Cons(_,xf)) = xf()
+	in
+		if n = 1 then head(s) else nth(tail(s), n-1)
+	end;
+
+
+val squares =
+	let 
+		fun squares_aux(k) = Cons(k*k, fn () => squares_aux(k+1))
+	in 
+		squares_aux(1)
+	end;
+4.
+
+val squares =
+	let 
+		fun squares_aux(k) = Cons(k*k, fn () => squares_aux(k+1))
+	in 
+		squares_aux(1)
+	end;
+
+> nth(squares, 13);
+val it = 169 : int
+
+

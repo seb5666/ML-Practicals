@@ -1,0 +1,56 @@
+
+
+> fun fst(x,y) = x;
+val fst = fn : 'a * 'b -> 'a
+> fun snd(x,y) = y;
+val snd = fn : 'a * 'b -> 'b
+
+> val p = ("red",3);
+val p = ("red", 3) : string * int
+> val q = (p, "blue");
+val q = (("red", 3), "blue") : (string * int) * string
+> val r = (q,p);
+val r = ((("red", 3), "blue"), ("red", 3))
+: ((string * int) * string) * (string * int)
+> val s = ((23, "grey"), r);
+val s = ((23, "grey"), ((("red", 3), "blue"), ("red", 3)))
+: (int * string) * (((string * int) * string) * (string * int))
+
+> fst (fst(q));
+val it = "red" : string
+> fst( fst p);
+Error-Can't unify string with 'a * 'b (Incompatible types) Found near fst(fst(p))
+Static errors (pass2)
+> fst (snd s);
+val it = (("red", 3), "blue") : (string * int) * string
+
+> fst((1,2),3);
+val it = (1, 2) : int * int
+> fst(1,2,3);
+Error-Can't unify Int32.int/int * Int32.int/int with Int32.int/int *
+Int32.int/int * Int32.int/int (Field 3 missing) Found near fst( 1, 2, 3)
+Static errors (pass2)
+
+> ["orange",1,2];
+Error-Can't unify Int32.int/int with string (Overloading does not include type) Found near [
+   "orange",
+   1,
+   2
+   ]
+Error-Can't unify Int32.int/int with string (Overloading does not include type) Found near [
+   "orange",
+   1,
+   2
+   ]
+Static errors (pass2)
+> 1.0::[2];
+Error-Can't unify Int32.int/int with real (Overloading does not include type) Found near ::
+( 1.0, [ 2])
+Static errors (pass2)
+> [3,(3,3)];
+Error-Can't unify Int32.int/int with Int32.int/int * Int32.int/int (Incompatible types) Found near [
+   3,
+   ( 3, 3)
+   ]
+Static errors (pass2)
+

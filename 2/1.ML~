@@ -1,0 +1,7 @@
+fun last [x] = x
+	| last (x::l) = last(l);
+
+
+last [1,2,3,4,5];
+last [2,3,~1];
+

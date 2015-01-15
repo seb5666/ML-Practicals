@@ -1,0 +1,2 @@
+fun area (x,y) = x*y/2;
+
